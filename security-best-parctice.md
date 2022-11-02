@@ -1,4 +1,4 @@
-# Fate安全白皮书
+# Fate安全best practice guidance
 ## 一．总体安全策略
 ### Issue1：
 建议从宏观、合规描述FATE的安全策略。
