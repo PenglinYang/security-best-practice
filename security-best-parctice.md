@@ -2,7 +2,6 @@
 ## 一．安全边界与安全风险
 多用户之间使用FATE进行联邦机器学习时，应明确各party的安全边界，如下图所示。\
 
-![image](https://user-images.githubusercontent.com/80935986/201018020-2cbad7f8-59e9-4377-8534-6385ed6dd625.png)
 
 如图中所示，使用FATE平台进行联邦学习的的安全假设为：Trust Domain1和Trust Domain2互为独立的信任域，arbiter对于trust domain1和trust domain2为半诚实安全域，即arbiter会遵守FATE协议执行，但是会保留模型聚合阶段的中间数据。基于此，使用FATE架构所带来的安全风险主要有：\
 网络端口暴露、网络传输所带来的的安全风险\
