@@ -1,8 +1,9 @@
 # Fate安全best practice guidance
 ## state of art of FATE Security
-
+FATE 安全协议有Paillier Encryption，RSA Encryption，Hash Factory，DH Key Exchange，SPDZ，OT和VSS。这些协议用于联邦学习中，为横向联邦、纵向联邦提供聚合阶段的安全保障。在此基础上，本文本给出了基于FATE的安全实践指导。
 
 ## 一．安全边界与安全风险
+FATE联邦学习主要分为横向联邦和纵向（迁移）联邦，其中横向联邦框架要求aggregator存在，纵向联邦学习不要求arbiter角色。
 多用户之间使用FATE进行联邦机器学习时，应明确各party的安全边界，如下图所示。\
 
 
