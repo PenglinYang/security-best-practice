@@ -9,23 +9,35 @@ FATE安全协议有Paillier Encryption，RSA Encryption，Hash Factory，DH Key 
 网络端口暴露、网络传输所带来的的安全风险\
 半诚实arbiter带来的安全风险\
 联邦模型带来的安全风险\
-基于以上分析，本文稿给出了FATE平台的安全配置指导。
+基于以上分析，本文稿给出了FATE平台的安全使用指导。
 
 
-## 二. 节点认证
-采用client_authentication和permission实现节点认证。
+## 二. 网络安全建议
+对于参与计算的FATE节点，各节点之间首先采用client_authentication和permission实现节点的身份认证。
 
-## 三．网络与传输密码安全
-### Issue4：RSA、ECDH、SM2、HMAC、HASH等的基础密码要求；
 在FATE涉及的网络传输过程中，例如基于HTTPS、Flask、gRPC协议等，采用SSL/TLS协议能够更好的保护数据传输的安全。尤其是在公网环境下进行网络传输时，SSL/TLS是必须选项。TLS密钥强度遵循RFC8446 section9.1
-### 网络端口暴露
+
 FATE平台通常暴露的网络端口为：
-若采用防火墙保护fateflow网络安全，丢弃其余端口；
+对于其余网络端口数据包，应丢弃。
 
-## 四．联邦学习安全协议
-FATE目前支持的联邦学习安全协议为：paillier同态加密，仿射性同态加密，RSA，可交换加密，DH密钥交换，秘密共享(spdz)，OT，安全聚合；
+## 三．安全协议配置建议
+FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encryption，Hash Factory，Diffne Hellman Key Exchange，SecretShare MPC Protocol，Oblivious Transfer，Feldman Verifiable secret sharing。现就相关安全协议给出安全配置建议,如下表所示。
+
+
+| 协议名称        | 安全性原理   | 安全配置建议 |
+| :-------------:| :----------: | ------------: |
+| Paillier Encryption|xxx        |xxx           |
+| RSA Encryption     |xxx        |xxx           |
+| Hash Factory       |xxx        |xxx           |
+| Diffie Hellman Key Exchange|XXX |XXX          |
+| SecretShare MPC Protocol (SPDZ) | XXX  | XXX  |
+|Oblivious Transfer| XXX         | XXX          |
+|Feldman Verifiable Secret Share| XXX | XXX     |
+
+
+
 ### paillier同态加密
-
+paillier加密为半同态加密，能够执行
 
 同态加密、秘密分享、差分隐私、不经意传输、匿踪查询的安全要求；
 ### Issue5：同态加密的半同态、全同态等参数要求
@@ -43,8 +55,8 @@ Pr[M(x)∈S]≤exp(ε)Pr[M(y)∈S]+δ
 ### Issue10：横向联邦、纵向联邦、联邦迁移
 CS或者p2p；梯度保护方法：同态加密、差分隐私、TEE
 
-## 六．针对数据拥有者、数据消费者、计算引擎的合规checklist
-### Issue11：个人信息保护法、gdpr
+## 四．FederatedML Components安全要求
+
 
 
 ## 其它问题
@@ -52,7 +64,7 @@ CS或者p2p；梯度保护方法：同态加密、差分隐私、TEE
 ### Issue13：交集内ID泄露问题
 ### Issue14:数据投毒，模型修改检测
 ### Issue15：模型结构保护
-
+### Issue11：个人信息保护法、gdpr
 
 
 
