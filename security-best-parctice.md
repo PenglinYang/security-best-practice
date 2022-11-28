@@ -26,7 +26,7 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 
 | 协议名称        | 安全性原理   | 安全配置建议 |
 | :-------------:| :----------: | ------------: |
-| Paillier Encryption|xxx        |xxx           |
+| Paillier Encryption|概率性非对称算法        |           |
 | RSA Encryption     |xxx        |xxx           |
 | Hash Factory       |xxx        |xxx           |
 | Diffie Hellman Key Exchange|XXX |XXX          |
