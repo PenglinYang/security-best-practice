@@ -24,42 +24,32 @@ FATE平台通常暴露的网络端口为：
 FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encryption，Hash Factory，Diffne Hellman Key Exchange，SecretShare MPC Protocol，Oblivious Transfer，Feldman Verifiable secret sharing。现就相关安全协议给出安全配置建议,如下表所示。
 
 
-| 协议名称        | 安全性原理   | 安全配置建议 |
-| :-------------:| :----------: | ------------: |
-| Paillier Encryption|概率性非对称算法        |           |
-| RSA Encryption     |xxx        |xxx           |
-| Hash Factory       |xxx        |xxx           |
-| Diffie Hellman Key Exchange|XXX |XXX          |
-| SecretShare MPC Protocol (SPDZ) | XXX  | XXX  |
-|Oblivious Transfer| XXX         | XXX          |
-|Feldman Verifiable Secret Share| XXX | XXX     |
+| 协议名称        | 算法分类   | 安全配置建议 |
+| :-------------:| :----------: | :------------: |
+| Paillier Encryption|概率性非对称算法        | 参考RSA算法安全性要求，密钥长度（模长）最低1024，推荐2048          |
+| RSA Encryption     |非对称加密算法        |密钥长度（模长）最低1024，推荐2048           |
+| ECDH Encryption    | 非对称加密算法       |                                          |
+| Hash Factory       |散列算法        |推荐使用sha256，sm3           |
+| Diffie Hellman Key Exchange|密钥交换算法 |密钥长度（模长）最低1024，推荐2048          |
+| SecretShare MPC Protocol (SPDZ) | 秘密分享算法  | 秘密分享servers之间不能共谋，并至少需要两个server；使用可信第三方生成乘法三元组或者使用paillier生成乘法三元组；|
+|Feldman Verifiable Secret Share| 秘密分享算法 |      |
+|Oblivious Transfer| 基于RSA非对称加密算法         | 密钥长度最低1024，推荐2048          |
+|Differential Privacy|   |        | 
 
 
 
-### paillier同态加密
-paillier加密为半同态加密，能够执行
 
-同态加密、秘密分享、差分隐私、不经意传输、匿踪查询的安全要求；
-### Issue5：同态加密的半同态、全同态等参数要求
-### Issue6：秘密分享的参数要求
-### Issue7：差分隐私的参数要求
-差分隐私用于防范差分攻击，通过对查询结果加入噪声，使得攻击者无法辨别某一样本是否在数据集中。
-拉普拉斯噪声
-高斯噪声
-{中央差分隐私、本地差分隐私}->
-Pr[M(x)∈S]≤exp(ε)Pr[M(y)∈S]+δ
-这里的ε被称为隐私预算。小的ε可以提供更高程度的隐私保护。而δ允许了算法在两个相邻数据输出同一值的大的概率差异。
-### Issue8：不经意传输的参数要求
-### Issue9：匿踪查询的参数要求
-## 五．联邦学习协议安全
-### Issue10：横向联邦、纵向联邦、联邦迁移
-CS或者p2p；梯度保护方法：同态加密、差分隐私、TEE
+## 四．FederatedML Components安全建议
 
-## 四．FederatedML Components安全要求
+不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。
+
+| Components名称 | 算法描述      |       安全模型  | 其它 |
+| :-------------:| :----------: | :------------: |:-------:|
+|  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/            |    参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，不需要第三方arbiter            |  交集内ID信息会被共同参与方知晓       |
+| Hetero Feature binning  | | | |
 
 
-
-## 其它问题
+## 五. 其它问题
 ### Issue12：纵向联邦中间结果泄露
 ### Issue13：交集内ID泄露问题
 ### Issue14:数据投毒，模型修改检测
