@@ -46,7 +46,10 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 | Components名称 | 算法描述      |       安全模型  | 其它 |
 | :-------------:| :----------: | :------------: |:-------:|
 |  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/            |    参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，不需要第三方arbiter            |  交集内ID信息会被共同参与方知晓       |
-| Hetero Feature binning  | | | |
+| Hetero Feature binning  |使用分箱的输入数据，计算每个列的iv和woe，并根据合并后的信息转换数据。https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/ |参与方之间利用paillier加性同态加密进行数据计算，不需要第三方arbiter | |
+|Hetero Feature Selection| 提供多种类型的filter。每个filter都可以根据用户配置选择列。https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_selection/|参与方之间明文选择feature？| |
+|||||
+
 
 
 ## 五. 其它问题
