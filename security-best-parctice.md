@@ -57,19 +57,15 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 |Hetero Secure Boosting||||
 |Hetero Fast Secure Boosting||||
 |Hetero NN|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/)|不需要第三方arbiter，Party B works as dominating server，Party A is data provider without label y| |
-|||||
-|||||
-|||||
+|Homo Secure Boost|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/ensemble/#homo-secureboost)|||
+|Secure Information Retrieval|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/sir/)|||
+|Hetero FTL|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_ftl/)|||
+|PSI|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/psi/)|||
+|Hetero KMeans|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_kmeans/)|||
+|Feldman Verifiable Sum|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feldman_verifiable_sum/)|||
 
 
-
-
-
-## 五. 其它问题
-### Issue12：纵向联邦中间结果泄露
-### Issue13：交集内ID泄露问题
-### Issue14:数据投毒，模型修改检测
-### Issue15：模型结构保护
+## 五. 合规性建议
 ### Issue11：个人信息保护法、gdpr
 
 
