@@ -43,14 +43,25 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 
 不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。
 
-| Components名称 | 算法描述      |       安全模型  | 其它 |
+| Components名称 | 算法描述      |       安全模型  | 数据安全建议 |
 | :-------------:| :----------: | :------------: |:-------:|
-|  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/            |    参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，不需要第三方arbiter            |  交集内ID信息会被共同参与方知晓       |
-| Hetero Feature binning  |使用分箱的输入数据，计算每个列的iv和woe，并根据合并后的信息转换数据。https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/ |参与方之间利用paillier加性同态加密进行数据计算，不需要第三方arbiter | |
-|Hetero Feature Selection| 提供多种类型的filter。每个filter都可以根据用户配置选择列。https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_selection/|参与方之间明文选择feature？| |
-|Hetero LR|通过多方构建纵向逻辑回归模块。|Phase1: Sample alignment. Phase2: Federated Training|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
-|Hetero SSHELR||||
-|Homo LR||||
+|  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/)            |    参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，不需要第三方arbiter            |  交集内ID信息会被共同参与方知晓       |
+| Hetero Feature binning  |使用分箱的输入数据，计算每个列的iv和woe，并根据合并后的信息转换数据。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/) |参与方之间利用paillier加性同态加密进行数据计算，不需要第三方arbiter | |
+|Hetero Feature Selection| 提供多种类型的filter。每个filter都可以根据用户配置选择列。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_selection/)|参与方之间明文选择feature？| |
+|Hetero LR|通过多方构建纵向逻辑回归模块。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-lr)|Phase1: Sample alignment. Phase2: Federated Training. |需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
+|Hetero SSHELR|heterogeneous logistic regression without arbiter role.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-sshe-logistic-regression) |不需要第三方arbiter|Secure Matrix Multiplication Protocol which uses HE and Secret Sharing|
+|Homo LR|横向逻辑回归 [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#homogeneous-lr)|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
+|Hetero LinR|纵向线性回归[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/linear_regression/#heterogeneous-linr|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
+|Hetero Federated Poisson Regression |[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/poisson_regression/|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议||
+|Homo NN||||
+|Hetero Secure Boosting||||
+|Hetero Fast Secure Boosting||||
+|Hetero NN|[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/|不需要第三方arbiter，Party B works as dominating server，Party A is data provider without label y| |
+|||||
+|||||
+|||||
+
+
 
 
 
