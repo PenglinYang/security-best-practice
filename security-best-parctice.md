@@ -1,7 +1,7 @@
 # Fate安全best practice guidance
 当使用FATE系统执行联邦学习等任务时，需使用恰当的安全模型和安全协议以确保计算过程中不泄露隐私数据。本文稿尝试给出使用FATE架构的安全指导。
 ## FATE 安全现状
-FATE安全协议有Paillier Encryption，RSA Encryption，Hash Factory，DH Key Exchange，SPDZ，OT和VSS。这些协议用于联邦学习中，为横向联邦、纵向联邦提供聚合阶段的安全保障。此外，一些联邦学习协议例如secureboost、Hetero Neural Network、Hetero Federated Transfer Learning等不需要第三方聚合服务器，也能保证参与方的数据隐私。因此从安全角度，FATE安全架构主要分为两种：有第三方arbiter和无第三方arbiter。
+FATE安全协议有Paillier Encryption，RSA Encryption，Hash Factory，DH Key Exchange，SPDZ，OT和VSS。这些协议用于联邦学习中，为横向联邦、纵向联邦提供聚合阶段的安全保障。此外，一些联邦学习协议例如secureboost、Hetero Neural Network、Hetero Federated Transfer Learning等不需要第三方聚合服务器，也能保证参与方的数据隐私。因此从安全角度，FATE安全模型主要分为两种：有第三方arbiter和无第三方arbiter。
 
 对于没有第三方arbiter的联邦学习安全假设为：各参与方为独立安全域，通过联邦学习协议进行数据传输，并且该协议能够保证各安全域的隐私数据不泄露。对于有第三方arbiter的联邦学习安全假设为：联邦学习各参与方互为独立的信任域，arbiter对于各参与方为半诚实安全域，即arbiter会遵守FATE协议执行，但是有可能会保留模型聚合阶段的中间数据。对于多个arbiter共同执行聚合、arbitration等操作时，要求arbiter之间不能共谋。采用安全多方计算等安全协议可以确保arbiter不会泄露各参与方的隐私数据。
 
@@ -41,9 +41,9 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 
 ## 四．FederatedML Components安全建议
 
-不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。
+不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。其中，安全模型主要指是否需要第三方节点作为arbiter，以及该第三方节点的安全需求，是诚实模型或者半诚实模型。在FATE安全域假设的基础上，用户使用FATE引擎的安全威胁主要体现在两个方面：遵守协议的arbiter是否有可能泄露隐私数据、根据中间结果是否能反推数据。不同参与方之间是否能通过联邦学习的模型反推另一方数据。因此，安全建议主要关注：模型投毒、推理攻击、GANs、搭便车攻击的预防措施。
 
-| Components名称 | 算法描述      |       安全模型  | 数据安全建议 |
+| Components名称 | 算法描述      |       安全模型  | 安全建议 |
 | :-------------:| :----------: | :------------: |:-------:|
 |  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/)            |    参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，不需要第三方arbiter            |  交集内ID信息会被共同参与方知晓       |
 | Hetero Feature binning  |使用分箱的输入数据，计算每个列的iv和woe，并根据合并后的信息转换数据。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/) |参与方之间利用paillier加性同态加密进行数据计算，不需要第三方arbiter | |
@@ -51,12 +51,12 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 |Hetero LR|通过多方构建纵向逻辑回归模块。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-lr)|Phase1: Sample alignment. Phase2: Federated Training. |需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
 |Hetero SSHELR|heterogeneous logistic regression without arbiter role.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-sshe-logistic-regression) |不需要第三方arbiter|Secure Matrix Multiplication Protocol which uses HE and Secret Sharing|
 |Homo LR|横向逻辑回归 [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#homogeneous-lr)|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
-|Hetero LinR|纵向线性回归[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/linear_regression/#heterogeneous-linr|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
-|Hetero Federated Poisson Regression |[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/poisson_regression/|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议||
+|Hetero LinR|纵向线性回归[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/linear_regression/#heterogeneous-linr)|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议| |
+|Hetero Federated Poisson Regression |[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/poisson_regression/)|需要第三方arbiter，半诚实；安全聚合可采用加性掩码、同态加密、秘密分享协议||
 |Homo NN||||
 |Hetero Secure Boosting||||
 |Hetero Fast Secure Boosting||||
-|Hetero NN|[link]https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/|不需要第三方arbiter，Party B works as dominating server，Party A is data provider without label y| |
+|Hetero NN|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/)|不需要第三方arbiter，Party B works as dominating server，Party A is data provider without label y| |
 |||||
 |||||
 |||||
