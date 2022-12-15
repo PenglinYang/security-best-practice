@@ -7,8 +7,8 @@ FATE安全协议有Paillier Encryption，RSA Encryption，Hash Factory，DH Key 
 
 基于此，使用FATE架构所带来的安全风险主要有：
  - 网络端口暴露、网络传输所带来的的安全风险
- - 半诚实arbiter带来的安全风险\
- - 联邦模型带来的安全风险\
+ - arbiter妥协带来的安全风险
+ - 参与方妥协带来的安全风险
  - 基于以上分析，本文稿给出了FATE平台的安全使用指导。
 
 
