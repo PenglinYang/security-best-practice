@@ -41,13 +41,15 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 
 ## 四．FederatedML Components安全建议
 
-不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。其中，安全模型主要指是否需要第三方节点作为arbiter，以及该第三方节点的安全需求，是诚实模型或者半诚实模型。在FATE安全域假设的基础上，用户使用FATE引擎的安全威胁主要体现在两个方面：遵守协议的arbiter是否有可能泄露隐私数据、根据中间结果是否能反推数据。不同参与方之间是否能通过联邦学习的模型反推另一方数据。因此，安全建议主要关注：
- - 重构攻击（在模型训练阶段，计算方的目的是重构数据提供者的原始数据，或者学习关于数据的更多信息，而不是最终模型所提供的信息）；
- - 模型反演攻击和成员推理攻击（除非攻击者对模型有黑货或者白盒访问权限，该攻击不存在）；
- - 数据投毒和模型投毒：理论来说不可避免，需要非技术手段进行限制或者排除。
- - GANs，基于GANs的推理攻击：
- - 搭便车攻击的预防措施。
-例如样本数要远大于特征数。Deep Leakage from Gradients
+不同的联邦学习components具有不同的安全模型，有些允许参与方之间直接交换中间信息，有些需要arbiter进行调节，现列出FATE所支持的、涉及到不同party联邦学习components的安全模型以及相关的安全建议。其中，安全模型主要指是否需要第三方节点作为arbiter，以及推荐使用的安全协议。
+
+基于FATE的安全假设，一些安全威胁无法对FATE造成影响或者不属于FATE的安全关注范围。例如模型反演攻击和成员推理攻击，这两种攻击方式都要求对模型有黑盒或者白盒访问权限。在FATE架构中，无论是第三方arbiter或者其它参与方均不具有此权限。推理攻击、重构攻击、GAN、或者基于GAN的推理攻击中，需要有访问明文梯度数据的能力，当梯度数据由由同态加密、秘密共享等安全协议保护时，该攻击在FATE安全假设中不易实现。
+当某一参与方受系统攻击妥协后，其可能暴露局部模型、中间数据和总体模型，这种情况多存在于参与方安全等级较低的场景中。针对此假设，可采用差分隐私保护自身数据的安全性。
+除以上主动攻击行为之外，一些被动攻击模式值得被关注，例如数据投毒、模型投毒和搭便车攻击。这些
+ 
+ Issue：参与者通过更新后的梯度信息，反推出其它参与者的隐私数据，当样本数要远大于特征数时，这种攻击也不易实现。
+
+
 
 | Components名称 | 算法描述      |       安全模型  | 安全建议 |
 | :-------------:| :----------: | :------------: |:-------:|
@@ -69,6 +71,7 @@ FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encr
 |PSI|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/psi/)|||
 |Hetero KMeans|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_kmeans/)|||
 |Feldman Verifiable Sum|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feldman_verifiable_sum/)|||
+
 
 
 ## 五. 合规性建议
