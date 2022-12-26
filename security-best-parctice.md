@@ -11,7 +11,7 @@ FATE包括了多种联邦学习协议，一些联邦学习协议例如Homo LR等
 
 在FATE涉及的网络传输过程中，例如基于HTTPS、Flask、gRPC协议等，采用SSL/TLS协议能够更好的保护数据传输的安全。尤其是在公网环境下进行网络传输时，SSL/TLS是必须选项。TLS密钥强度遵循RFC8446 section9.1
 
-FATE平台通常暴露三个网络端口：8080,9360,9380， 对于其余网络端口数据包，应慎重处理。
+FATE平台通常暴露一个网络端口：9370， 对于其余网络端口数据包，应慎重处理。
 
 ## 三．安全协议配置建议
 FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encryption，Hash Factory，Diffne Hellman Key Exchange，SecretShare MPC Protocol，Oblivious Transfer。现就相关安全协议给出安全配置建议,如下表所示。
