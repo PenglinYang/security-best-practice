@@ -1,7 +1,7 @@
 # Fate security best practice guidance
 
 When the FATE is used to perform tasks such as federated learning, security models and security protocols should be used to ensure that no privacy data is disclosed during the calculation process. This draft attempts to provide security instructions for using FATE.
-## 1. State of art of FATE
+## 1. State of Art of FATE
 
 FATE includes multiple federal learning protocols, some of which are composed of participants and third-party arbiters, such as Homo LR. Other federated learning protocols do not require third-party arbiter to do parameter aggregation, such as secureboost, Hetero Neural Network, Hetero FTL, etc. Therefore, FATE security model can be divided into two types: with third-party arbiter and without third-party arbiter.
 
@@ -18,7 +18,7 @@ In the network transmission process involved in FATE, such as HTTPS, Flask, gRPC
 FATE usually expose one Network port: 9370，network data package of other ports need to be treated with caution.
 
 ## 3. Security Protocol Configuration Recommendations
-FATE目前支持的联邦学习安全协议为：paillier同态加密，RSA Encryption，Hash Factory，Diffne Hellman Key Exchange，SecretShare MPC Protocol，Oblivious Transfer。现就相关安全协议给出安全配置建议,如下表所示。
+
 The federated learning security protocol that FATE supports are: Paillier Homomorphic Encryption, Hash Factory, DH Key Exchange, SecretShare MPC Protocol, Oblivious Transfer. The table below shows the security configuration recommendation. 
 
 | Protocol Name        | Algorithm Classification   | Security Configuration Recommendation |
@@ -37,14 +37,13 @@ When the security assumptions of FATE participating nodes are honest and curious
 
 When a participant or arbiter is compromised by system attack, or the participant itself is a malicious node, it may expose local model, intermediate data and overall model. In view of this hypothesis, TEE can be adopted to protect the operational environment of FATE participants. Or using differential privacy to protect the confidentiality of participants' private data, to make sure inference, reconstruction, free-riding attacks can not obtain valid private data. Or using non-technical methods, like background check, signing agreement, etc., to ensure that all participants are at least semi-honest security model. According to this compromise hypothesis, data poisoning and model poisoning may also exist. These attacks only affect model availability, but does not reveal private data. When FATE participants find that machine learning model cannot converge or the classification accuracy decreases, the learning process should be terminated in time.
 
-如下表给出了不同的联邦学习components需要的的安全模型以及相关的安全协议建议。其中，安全模型主要指是否需要第三方节点作为arbiter，以及各参与方的角色。既有安全机制或安全建议主要指联邦学习算法已采用的安全机制或推荐采用的安全协议及其它安全建议。
-The following table 
+The following table shows the security models and related security protocol recommendations required by different federated learning components. Among them, security model mainly refers to whether the third party node is needed as arbiter, and the role of each participant. Existing security mechanisms or security recommendations refer to security mechanisms adopted by the federated learning algorithm or recommended security protocols and other security suggestions.
 
-| Components名称 | 算法描述      |       安全模型  | 既有安全机制或安全建议 |
-| :-------------:| :----------: | :------------: |:-------:|
-|  Intersect  |  计算两方的相交数据集，而不会泄漏任何差异数据集的信息。主要用于纵向任务。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/)            |    不需要第三方arbiter            |  参与方之间利用RSA、DH、ECDH加密算法保护数据隐私，交集内ID信息会被共同参与方知晓       |
-| Hetero Feature binning  |使用分箱的输入数据，计算每个列的iv和woe，并根据合并后的信息转换数据。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/) |不需要第三方arbiter | 参与方之间利用paillier加性同态加密进行数据计算|
-|Hetero Feature Selection| 提供多种类型的filter。每个filter都可以根据用户配置选择列。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_selection/)|不需要第三方arbiter|iv filter参考Hetero feature binning安全建议 |
+| Components | Algorithm Description      |       Security Model  | Exist Security Mechanism or Security Recommendations |
+| :-------------:| :-------------: | :-------------: |:-------------:|
+|  Intersect  |  This module helps two and more parties to find common entry ids without leaking non-overlapping ids. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/intersect/)            |    No third party arbiter is needed.           |  RSA, DH, ECDH encryption algorithms are used to protect data privacy between participants, and the ID information in the intersection will be known by participants.  
+| Hetero Feature Binning  | Based on quantile binning and bucket binning methods, Guest (with label) could evaluate Host's data binning quality with WOE/IV/KS. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_binning/) | No third party arbiter is needed | Participants use Paillier Encryption to protect label information|
+|Hetero Feature Selection| If iv filter is used, Hetero Feature Binning will be invoked. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/feature_selection/)|No third party arbiter is needed. |Iv filter's security recommendations refer to Hetero Feature Binning. |
 |Hetero LR|通过多方构建纵向逻辑回归模块。[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-lr)|需要第三方arbiter，参与方B为标签方，A为数据方，（honest but curious）|Arbiter需利用paillier同态加密和掩码保护梯度数据隐私。|
 |Hetero SSHELR|heterogeneous logistic regression without arbiter role.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-sshe-logistic-regression) |不需要第三方arbiter|，采用Secure Matrix Multiplication Protocol which uses HE and Secret Sharing|
 |Homo LR|横向逻辑回归 [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#homogeneous-lr)|参与方身份对等，需要第三方arbiter（honest but curious）| 安全聚合采用秘密分享协议，并且t>n/2（t是指恢复密码的最小份数，n为client总数？）；为防止server虚构client数量，推荐使用PKI为client提供注册信息；采用double-mask防止server在处理掉线client或者网络延迟情况下获得client梯度数据。|
