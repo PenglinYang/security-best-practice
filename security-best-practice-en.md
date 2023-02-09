@@ -47,27 +47,27 @@ The following table shows the security models and related security protocol reco
 |Hetero LR|Hetero logistic regression between host and guest.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-lr)|Third party arbiter is needed, Party A holds the label. |Arbiter needs to use Paillier Encryption and mask to protect gradients.|
 |Hetero SSHELR|heterogeneous logistic regression without arbiter role.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#heterogeneous-sshe-logistic-regression) |No third parity arbiter is needed| Use Secure Matrix Multiplication Protocol, in which uses Paillier and Secret Sharing |
 |Homo LR|Homogeneous logistic regression with arbiter role [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/logistic_regression/#homogeneous-lr)|Participants are identical, and third party arbiter is needed| Secure aggregation uses Secret Sharing Protocol, and t>n/2 (t is the minimum pieces of rebuilding secret key, n is total number of secret sharing pieces). In order to prevent server from making up fake clients，PKI could be used to provide registration for clients. Use double-masking to prevent server from obtaining client gradient data when processing offline or network delay clients.|
-|Hetero LinR|Heterogeneous liner regression 纵向线性回归[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/linear_regression/#heterogeneous-linr)|Party A为guest、Party B为Host，A方拥有label，需要第三方arbiter（Honest but curious）| 梯度聚合可采用paillier同态加密、秘密分享协议。若采用paillier同态加密，为避免arbiter获取梯度中间数据，需增加附加掩码；若采用秘密分享协议，要求至少具有两个秘密分享server，且server之间不能共谋|
-|Hetero Federated Poisson Regression |纵向泊松回归 [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/poisson_regression/)|Party A为guest、Party B为Host，A方拥有label，需要第三方arbiter（Honest but curious）|梯度聚合可采用paillier同态加密、秘密分享协议。若采用paillier同态加密，为避免arbiter获取梯度中间数据，需增加附加掩码；若采用秘密分享协议，要求至少具有两个秘密分享server，且server之间不能共谋|
-|Homo Neural Network|横向神经网络[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/homo_nn/)|参与方身份对等，需要第三方arbiter（honest but curious）|安全聚合采用秘密分享协议，并且t>n/2（t是指恢复密码的最小份数，n为client总数？）；为防止server虚构client数量，推荐使用PKI为client提供注册信息；采用double-mask防止server在处理掉线client或者网络延迟情况下获得client梯度数据。|
-|Hetero Secure Boosting|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/ensemble/#hetero-secureboost )|Active Party (dominating server，label y), Passive Party|由Active Party生成Paillier Encryption密钥保护gi和hi|
-|Hetero NN| [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/)|Party A：data matrix provider; Party B：data matrix and label y，dominating server|由Party B生成Paillier Encryption密钥保护activations，同时Party A、B对activations添加噪声防止推理。 |
-|Homo Secure Boost|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/ensemble/#homo-secureboost)|参与方身份对等，需要第三方arbiter（honest but curious）|Clients之间协商总和可抵消归零的随机数，附加到g和h中，使server无法知悉每个client的训练中间数据|
-|Hetero FTL|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_ftl/)|Host：label; Client;不需要第三方arbiter|Host和Client同时生成Paillier Encryption密钥和掩码保护训练中间数据|
-|Hetero KMeans|[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_kmeans/)|需要第三方arbiter|Clients之间协商总和可抵消归零的随机数，附加到训练中间数据中，使server无法知悉每个client的训练中间数据|
+|Hetero LinR|Heterogeneous linear regression.[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/linear_regression/#heterogeneous-linr)|Party A represents guest and has the label, Party B represents Host, Party C is third party arbiter. | Gradients aggregation uses Paillier Encryption protocol or Secret Sharing protocol. If using Paillier Encryption, additional mask should be used to prevent arbiter from obtaining gradient data. If using Secret Sharing, at least two secret sharing servers are needed, and servers cannot collusion.|
+|HeteroPoisson |Heterogeneous Federated Poisson Regression [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/poisson_regression/)|Party A represents guest and has the label, Party B represents Host, Party C is third party arbiter. | Gradients aggregation uses Paillier Encryption protocol or Secret Sharing protocol. If using Paillier Encryption, additional mask should be used to prevent arbiter from obtaining gradient data. If using Secret Sharing, at least two secret sharing servers are needed, and servers cannot collusion.|
+|HomoNN|Homogeneous Neural Network [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/homo_nn/)|Participants are identical, third party arbiter is needed|Secure aggregation uses Secret Sharing Protocol, and t>n/2 (t is the minimum pieces of rebuilding secret key, n is total number of secret sharing pieces). In order to prevent server from making up fake clients，PKI could be used to provide registration for clients. Use double-masking to prevent server from obtaining client gradient data when processing offline or network delay clients.|
+|Hetero Secure Boosting|Heterogeneous secure gradient boosting decision tree. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/ensemble/#hetero-secureboost )| Active Party is the dominating server and holds the label y. Passive Party only provide data matrix. |Active party generate Paillier Encryption key pair to protect intermediate data.|
+|Hetero NN| Heterogeneous neural network. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_nn/)|Party A only provides data matrix. Party B is dominating server, provides data matrix and label y.|Party B generates Paillier Encryption key pair to protect activations. Party A and B add noise to activations to avoid inference.|
+|Homo Secure Boost|Homogeneous secure gradient boosting decision tree. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/ensemble/#homo-secureboost)|Participants(clients) are identical, third party arbiter(server) is needed.| Clients negotiate random number which could be attached to parameter G anda H. This random number could protect intermediate data from being known by server.|
+|Hetero FTL|Heterogeneous federated transfer learning. [link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_ftl/)|Host party owns data matrix. Guest party owns data matrix and label. No third party arbiter is needed. |Host and Guest uses Paillier Encryption and mask to protect intermediate data.|
+|Hetero KMeans| Heterogeneous KMeans[link](https://fate.readthedocs.io/en/latest/zh/federatedml_component/hetero_kmeans/)|Party A represents as Guest, Party B represents as Host. Third party arbiter is needed, and is in charge of generating private and public keys.| Guest and Host negotiate random number and attach it to intermediate data. This random number could protect intermediate data from being known by arbiter. |
 
 
 
-## 五. 合规性建议
-FATE本身是一个开源的联邦机器学习平台，各参与方通过安全协议等交换中间数据，确保自身的数据不出域，最终达到共同计算机器学习模型的目的。当FATE架构用于生产实践中时，一些与信息安全、网络安全、数据安全相关的法律法规有助于使用者从安全、合规角度更有效的使用FATE。以下列出了使用FATE过程中可能涉及的国内外法律法规，供参考。
+## 5. Compliance Recommendations
+FATE is an open source federated machine learning platform. All participants exchange intermediate data through security protocols to make sure their own data stays within domain, and achieve the purpose of jointly training machine learning model in the end. When FATE is used in practices, some laws and regulations related to information security, network security and data security could help users to use FATE more effectively from the perspective of security and compliance. The following lists some domestic and international laws and regulations that may be involved in the process of using FATE.
 
-### 国内相关法律法规
- - 中华人民共和国数据安全法
- - 中华人民共和国个人信息保护法
- - 中华人民共和国网络安全法
- - PIA GB∕T 39335-2020 信息安全技术 个人信息安全影响评估指南
+### Relevant domestic laws and regulations
+ - Data Security Law of the People's Republic of China
+ - Personal Information Protection Law of the People's Republic of China
+ - Network Security Law of the People's Republic of China
+ - PIA GB∕T 39335-2020 Information Security Technology  Personal Information Security Impact Assessment Guide
 
-### 国际法律法规
+### Relevant international laws and regulations
 
  - GDPR-General Data Protection Regulation
  - CCPA-California Consumer Privacy Act Regulation
