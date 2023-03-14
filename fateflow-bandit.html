@@ -1,0 +1,921 @@
+
+Metrics:
+Total lines of code: 21001
+Total lines skipped (#nosec): 0
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./examples/model/test_inference.py
+Line number: 25
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+24	        headers = {"Content-Type": "application/json"}
+25	        response = requests.post(url1, json=request_data_tmp, headers=headers)
+26	        print("url地址:", url1)
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/controller/engine_controller/linkis_spark.py
+Line number: 71
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+70	        task_info["engine_conf"]["headers"] = headers
+71	        res = requests.post(url=linkis_execute_url, headers=headers, json=data)
+72	        schedule_logger(task.f_job_id).info(f"start linkis spark task: {res.text}")
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/controller/engine_controller/linkis_spark.py
+Line number: 90
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+89	        headers = task.f_engine_conf.get("headers")
+90	        response = requests.get(linkis_query_url, headers=headers).json()
+91	        schedule_logger(task.f_job_id).info(f"querty task response:{response}")
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/controller/engine_controller/linkis_spark.py
+Line number: 99
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+98	            schedule_logger(task.f_job_id).info(f"headers: {headers}")
+99	            kill_result = requests.get(linkis_execute_url, headers=headers)
+100	            schedule_logger(task.f_job_id).info(f"kill result:{kill_result}")
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/controller/engine_controller/linkis_spark.py
+Line number: 112
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+111	            headers = task.f_engine_conf["headers"]
+112	            response = requests.get(linkis_query_url, headers=headers).json()
+113	            detect_logger.info(response)
+
+try_except_pass: Try, Except, Pass detected.
+Test ID: B110
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-703
+File: ./python/fate_flow/controller/version_controller.py
+Line number: 33
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b110_try_except_pass.html
+
+32	                    cls.INCOMPATIBLE_VERSION[key][str(version)] = conf[key][version]
+33	        except Exception as e:
+34	            pass
+35	
+
+blacklist: The pyCrypto library and its module RSA are no longer actively maintained and have been deprecated. Consider using pyca/cryptography library.
+Test ID: B413
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/db/key_manager.py
+Line number: 1
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b413-import-pycrypto
+
+1	from Crypto.PublicKey import RSA
+2	from Crypto import Random
+3	
+
+blacklist: The pyCrypto library and its module Random are no longer actively maintained and have been deprecated. Consider using pyca/cryptography library.
+Test ID: B413
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/db/key_manager.py
+Line number: 2
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b413-import-pycrypto
+
+1	from Crypto.PublicKey import RSA
+2	from Crypto import Random
+3	
+
+hardcoded_password_string: Possible hardcoded password: 'pass'
+Test ID: B105
+Severity: LOW
+Confidence: MEDIUM
+CWE: CWE-259
+File: ./python/fate_flow/entity/run_status.py
+Line number: 33
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b105_hardcoded_password_string.html
+
+32	    FAILED = "failed"
+33	    PASS = "pass"
+34	    SUCCESS = "success"
+
+try_except_pass: Try, Except, Pass detected.
+Test ID: B110
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-703
+File: ./python/fate_flow/fate_flow_client.py
+Line number: 74
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b110_try_except_pass.html
+
+73	                    response = requests_utils.request(method="post", url="/".join([server_url, "job", func.rstrip('_job')]), json=post_data)
+74	            except:
+75	                pass
+76	        elif func == 'data_view_query' or func == 'clean_queue':
+
+try_except_pass: Try, Except, Pass detected.
+Test ID: B110
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-703
+File: ./python/fate_flow/fate_flow_client.py
+Line number: 183
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b110_try_except_pass.html
+
+182	                response = requests_utils.request(method="post", url="/".join([server_url, "data", func]), json=config_data)
+183	        except:
+184	            pass
+185	    elif func in TABLE_FUNC:
+
+start_process_with_a_shell: Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+Test ID: B605
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/fate_flow_client.py
+Line number: 240
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b605_start_process_with_a_shell.html
+
+239	    print('use service.sh to start standalone node server....')
+240	    os.system('sh service.sh start --standalone_node')
+241	    time.sleep(5)
+
+start_process_with_partial_path: Starting a process with a partial executable path
+Test ID: B607
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/fate_flow_client.py
+Line number: 240
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b607_start_process_with_partial_path.html
+
+239	    print('use service.sh to start standalone node server....')
+240	    os.system('sh service.sh start --standalone_node')
+241	    time.sleep(5)
+
+blacklist: The pyCrypto library and its module RSA are no longer actively maintained and have been deprecated. Consider using pyca/cryptography library.
+Test ID: B413
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/hook/flow/site_authentication.py
+Line number: 4
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b413-import-pycrypto
+
+3	
+4	from Crypto.PublicKey import RSA
+5	from Crypto.Signature import PKCS1_v1_5
+
+blacklist: The pyCrypto library and its module PKCS1_v1_5 are no longer actively maintained and have been deprecated. Consider using pyca/cryptography library.
+Test ID: B413
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/hook/flow/site_authentication.py
+Line number: 5
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b413-import-pycrypto
+
+4	from Crypto.PublicKey import RSA
+5	from Crypto.Signature import PKCS1_v1_5
+6	from Crypto.Hash import MD5
+
+blacklist: The pyCrypto library and its module MD5 are no longer actively maintained and have been deprecated. Consider using pyca/cryptography library.
+Test ID: B413
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/hook/flow/site_authentication.py
+Line number: 6
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b413-import-pycrypto
+
+5	from Crypto.Signature import PKCS1_v1_5
+6	from Crypto.Hash import MD5
+7	
+
+blacklist: Use of insecure MD2, MD4, MD5, or SHA1 hash function.
+Test ID: B303
+Severity: MEDIUM
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/hook/flow/site_authentication.py
+Line number: 22
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b303-md5
+
+21	        raise Exception(f"signature error: no found party id {parm.party_id} private key")
+22	    sign= PKCS1_v1_5.new(RSA.importKey(private_key)).sign(MD5.new(json.dumps(parm.body).encode()))
+23	    return SignatureReturn(site_signature=base64.b64encode(sign).decode())
+
+blacklist: Use of insecure MD2, MD4, MD5, or SHA1 hash function.
+Test ID: B303
+Severity: MEDIUM
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/hook/flow/site_authentication.py
+Line number: 33
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b303-md5
+
+32	    verifier = PKCS1_v1_5.new(RSA.importKey(public_key))
+33	    if verifier.verify(MD5.new(json.dumps(parm.body).encode()), base64.b64decode(parm.site_signature)) is True:
+34	        return AuthenticationReturn()
+
+blacklist: Consider possible security implications associated with the subprocess module.
+Test ID: B404
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/manager/worker_manager.py
+Line number: 17
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b404-import-subprocess
+
+16	import os
+17	import subprocess
+18	import sys
+
+hashlib: Use of weak SHA1 hash for security. Consider usedforsecurity=False
+Test ID: B324
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/model/checkpoint.py
+Line number: 68
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b324_hashlib.html
+
+67	            data['models'][model_name] = {
+68	                'sha1': hashlib.sha1(serialized_string).hexdigest(),
+69	                'buffer_name': pb_name,
+
+hashlib: Use of weak SHA1 hash for security. Consider usedforsecurity=False
+Test ID: B324
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/model/checkpoint.py
+Line number: 121
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b324_hashlib.html
+
+120	
+121	            sha1 = hashlib.sha1(serialized_string).hexdigest()
+122	            if sha1 != model['sha1']:
+
+hardcoded_password_string: Possible hardcoded password: 'fate-homo-serving-minio-secret'
+Test ID: B105
+Severity: LOW
+Confidence: MEDIUM
+CWE: CWE-259
+File: ./python/fate_flow/pipelined_model/homo_model_deployer/kfserving/base.py
+Line number: 27
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b105_hardcoded_password_string.html
+
+26	
+27	MINIO_K8S_SECRET_NAME = "fate-homo-serving-minio-secret"
+28	
+
+hardcoded_password_string: Possible hardcoded password: 'MINIO_SECRET_ACCESS_KEY'
+Test ID: B105
+Severity: LOW
+Confidence: MEDIUM
+CWE: CWE-259
+File: ./python/fate_flow/pipelined_model/homo_model_deployer/kfserving/model_storage/minio.py
+Line number: 27
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b105_hardcoded_password_string.html
+
+26	ENV_MINIO_ACCESS_KEY_ID = "MINIO_ACCESS_KEY_ID"
+27	ENV_MINIO_SECRET_ACCESS_KEY = "MINIO_SECRET_ACCESS_KEY"
+28	ENV_MINIO_USE_HTTPS = "MINIO_USE_HTTPS"
+
+blacklist: Consider possible security implications associated with the subprocess module.
+Test ID: B404
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/pipelined_model/homo_model_deployer/kfserving/pytorch.py
+Line number: 21
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b404-import-subprocess
+
+20	import os
+21	import subprocess
+22	import tempfile
+
+subprocess_without_shell_equals_true: subprocess call - check for execution of untrusted input.
+Test ID: B603
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/pipelined_model/homo_model_deployer/kfserving/pytorch.py
+Line number: 78
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b603_subprocess_without_shell_equals_true.html
+
+77	               "-f"]
+78	    ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+79	    if ret.returncode != 0:
+
+try_except_pass: Try, Except, Pass detected.
+Test ID: B110
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-703
+File: ./python/fate_flow/scheduling_apps/operation_app.py
+Line number: 40
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b110_try_except_pass.html
+
+39	            job_configuration = job_utils.get_task_using_job_conf(**kwargs)
+40	        except Exception:
+41	            pass
+42	
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 28
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+27	    def test_upload_guest(self):
+28	        response = requests.post("/".join([self.server_url, 'data', 'upload']), json=self.upload_guest_config)
+29	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 33
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+32	        for i in range(60):
+33	            response = requests.post("/".join([self.server_url, 'job', 'query']), json={'job_id': job_id})
+34	            self.assertTrue(int(response.json()['retcode']) == 0)
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 40
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+39	    def test_upload_host(self):
+40	        response = requests.post("/".join([self.server_url, 'data', 'upload']), json=self.upload_host_config)
+41	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 45
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+44	        for i in range(60):
+45	            response = requests.post("/".join([self.server_url, 'job', 'query']), json={'job_id': job_id})
+46	            self.assertTrue(int(response.json()['retcode']) == 0)
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 52
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+51	    def test_upload_history(self):
+52	        response = requests.post("/".join([self.server_url, 'data', 'upload/history']), json={'limit': 2})
+53	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/data_access_test.py
+Line number: 57
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+56	    def test_download(self):
+57	        response = requests.post("/".join([self.server_url, 'data', 'download']), json=self.download_config)
+58	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/table_test.py
+Line number: 24
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+23	    def test_upload_guest(self):
+24	        response = requests.post("/".join([server_url, 'data', 'upload']), json=self.upload_config)
+25	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/table_test.py
+Line number: 29
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+28	        for i in range(60):
+29	            response = requests.post("/".join([server_url, 'job', 'query']), json={'job_id': job_id})
+30	            self.assertTrue(int(response.json()['retcode']) == 0)
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/table_test.py
+Line number: 47
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+46	def test_table_info():
+47	    response = requests.post("/".join([server_url, 'table', 'table_info']),
+48	                             json={'table_name': 'breast_hetero_guest',
+49	                                   'namespace': 'fate_flow_test_table_breast_hetero'})
+50	    return response
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/table_test.py
+Line number: 55
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+54	    # submit
+55	    response = requests.post("/".join([server_url, 'table', 'delete']),
+56	                             json={'table_name': 'breast_hetero_guest',
+57	                                   'namespace': 'fate_flow_test_table_breast_hetero'})
+58	    return response
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/tracking_test.py
+Line number: 38
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+37	            }
+38	        response = requests.post("/".join([self.server_url, 'job', 'submit']),
+39	                                 json={'job_dsl': dsl_data, 'job_runtime_conf': config_data})
+40	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/tracking_test.py
+Line number: 45
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+44	        for i in range(60):
+45	            response = requests.post("/".join([self.server_url, 'job', 'query']), json={'job_id': job_id, 'role': 'guest'})
+46	            self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/tracking_test.py
+Line number: 85
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+84	    if 'download' in fun:
+85	        response = requests.get("/".join([self.server_url, "tracking", fun]), json=data, stream=True)
+86	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/api_tests/tracking_test.py
+Line number: 88
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+87	    else:
+88	        response = requests.post("/".join([self.server_url, 'tracking', fun]), json=data)
+89	        self.assertTrue(response.status_code in [200, 201])
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 29
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+28	print('job data view')
+29	response = requests.post('{}/tracking/job/data_view'.format(fate_flow_server_host), json=base_request_data)
+30	print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 31
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+30	print(response.json())
+31	response = requests.post('{}/job/data/view/query'.format(fate_flow_server_host), json=base_request_data)
+32	print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 36
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+35	print('dependency')
+36	response = requests.post('{}/pipeline/dag/dependency'.format(fate_flow_server_host),
+37	                         json={'job_id': job_id, 'role': role, 'party_id': party_id})
+38	dependency_response = response.json()
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 46
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+45	    print('metrics')
+46	    response = requests.post('{}/tracking/component/metrics'.format(fate_flow_server_host), json=base_request_data)
+47	    print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 55
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+54	                base_request_data['metric_name'] = metric_name
+55	                response = requests.post('{}/tracking/component/metric_data'.format(fate_flow_server_host), json=base_request_data)
+56	                if response.json()['retcode'] == 0 :
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 65
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+64	    print('parameters')
+65	    response = requests.post('{}/tracking/component/parameters'.format(fate_flow_server_host), json=base_request_data)
+66	    print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 70
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+69	    print('output model')
+70	    response = requests.post('{}/tracking/component/output/model'.format(fate_flow_server_host), json=base_request_data)
+71	    print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 75
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+74	    print('output data')
+75	    response = requests.post('{}/tracking/component/output/data'.format(fate_flow_server_host), json=base_request_data)
+76	    print(response.json())
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tests/check_all_api.py
+Line number: 79
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+78	    print()
+79	    response = requests.post('{}/tracking/component/output/data/table'.format(fate_flow_server_host), json=base_request_data)
+80	    print(response.json())
+
+hashlib: Use of weak SHA1 hash for security. Consider usedforsecurity=False
+Test ID: B324
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/tests/model_tests/checkpoint_test.py
+Line number: 16
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b324_hashlib.html
+
+15	model_string = (Path(__file__).parent.parent / 'misc' / 'DataIOMeta.pb').read_bytes()
+16	sha1 = hashlib.sha1(model_string).hexdigest()
+17	buffer_name = 'DataIOMeta'
+
+hashlib: Use of weak SHA1 hash for security. Consider usedforsecurity=False
+Test ID: B324
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-327
+File: ./python/fate_flow/tests/model_tests/pipelined_model_test.py
+Line number: 133
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b324_hashlib.html
+
+132	        with open(archive_file_path, 'rb') as f, open(archive_file_path + '.sha1', encoding='utf8') as g:
+133	            sha1 = hashlib.sha1(f.read()).hexdigest()
+134	            sha1_orig = g.read().strip()
+
+hardcoded_password_default: Possible hardcoded password: ''
+Test ID: B107
+Severity: LOW
+Confidence: MEDIUM
+CWE: CWE-259
+File: ./python/fate_flow/tests/upload_file_to_mysql.py
+Line number: 16
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b107_hardcoded_password_default.html
+
+15	class MysqldbHelper(object):
+16	    def __init__(self, host='', user='', passwd='', port='',  database=''):
+17	        self.host = host
+18	        self.user = user
+19	        self.password = passwd
+20	        self.database = database
+21	        self.port = port
+22	        self.con = None
+23	        self.cur = None
+24	        try:
+25	            print(host, user, passwd, port, database)
+26	            self.con = pymysql.connect(host=self.host, user=self.user, passwd=self.password, port=self.port, db=self.database)
+27	            self.cur = self.con.cursor()
+28	        except:
+29	            print("DataBase connect error,please check the db config.")
+30	
+
+request_without_timeout: Requests call without timeout
+Test ID: B113
+Severity: MEDIUM
+Confidence: LOW
+CWE: CWE-400
+File: ./python/fate_flow/tools/deal_rollsite_audit_log.py
+Line number: 217
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html
+
+216	def upload(audit_log):
+217	    res = requests.post("/".join([ELASTIC_SEARCH_URL, LOG_INDEX, "_doc"]), json=audit_log)
+218	    print(res.json())
+
+hardcoded_password_string: Possible hardcoded password: ''
+Test ID: B105
+Severity: LOW
+Confidence: MEDIUM
+CWE: CWE-259
+File: ./python/fate_flow/tools/deal_rollsite_audit_log_settings.py
+Line number: 6
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b105_hardcoded_password_string.html
+
+5	ELASTIC_SEARCH_USER = ""
+6	ELASTIC_SEARCH_PASSWORD = ""
+7	
+
+blacklist: Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+Test ID: B311
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-330
+File: ./python/fate_flow/utils/api_utils.py
+Line number: 72
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b311-random
+
+71	    if full_jitter:
+72	        countdown = random.randrange(countdown + 1)
+73	    # Adjust according to maximum wait time and account for negative values.
+
+blacklist: Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+Test ID: B311
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-330
+File: ./python/fate_flow/utils/cron.py
+Line number: 75
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b311-random
+
+74	            while True:
+75	                self.finished.wait((self.interval if self.rand_size is None else self.interval - random.randint(0, self.rand_size))/1000)
+76	                if not self.finished.is_set():
+
+blacklist: Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+Test ID: B311
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-330
+File: ./python/fate_flow/utils/job_utils.py
+Line number: 513
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b311-random
+
+512	    if cur_retry < max_retry_cnt - long_retry_cnt:
+513	        retry_interval = random.random() * 10 + 5
+514	    else:
+
+blacklist: Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+Test ID: B311
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-330
+File: ./python/fate_flow/utils/job_utils.py
+Line number: 515
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b311-random
+
+514	    else:
+515	        retry_interval = round(300 + random.random() * 10, 3)
+516	    return retry_interval
+
+blacklist: Consider possible security implications associated with the subprocess module.
+Test ID: B404
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/utils/log_sharing_utils.py
+Line number: 2
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b404-import-subprocess
+
+1	import os
+2	import subprocess
+3	
+
+subprocess_popen_with_shell_equals_true: subprocess call with shell=True identified, security issue.
+Test ID: B602
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/utils/log_sharing_utils.py
+Line number: 89
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b602_subprocess_popen_with_shell_equals_true.html
+
+88	        res = subprocess.run(
+89	            cmd, shell=True, universal_newlines=True,
+90	            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+91	        )
+92	        return res.stdout
+
+try_except_pass: Try, Except, Pass detected.
+Test ID: B110
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-703
+File: ./python/fate_flow/utils/log_utils.py
+Line number: 115
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b110_try_except_pass.html
+
+114	                            del LoggerFactory.schedule_logger_dict[key]
+115	                except:
+116	                    pass
+117	            return True
+
+blacklist: Consider possible security implications associated with the subprocess module.
+Test ID: B404
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/utils/process_utils.py
+Line number: 18
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b404-import-subprocess
+
+17	import os
+18	import subprocess
+19	import psutil
+
+subprocess_without_shell_equals_true: subprocess call - check for execution of untrusted input.
+Test ID: B603
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/utils/process_utils.py
+Line number: 57
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b603_subprocess_without_shell_equals_true.html
+
+56	
+57	    p = subprocess.Popen(process_cmd,
+58	                         stdout=std,
+59	                         stderr=std,
+60	                         startupinfo=startupinfo,
+61	                         cwd=cwd_dir,
+62	                         env=subprocess_env
+63	                         )
+64	    with open(pid_path, 'w') as f:
+
+start_process_with_a_shell: Starting a process with a shell, possible injection detected, security issue.
+Test ID: B605
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/utils/process_utils.py
+Line number: 106
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b605_start_process_with_a_shell.html
+
+105	    keyword_filter_cmd = ' |'.join(['grep %s' % keyword for keyword in keywords])
+106	    ret = os.system('ps aux | {} | grep -v grep | grep -v "ps aux "'.format(keyword_filter_cmd))
+107	    return ret == 0
+
+blacklist: Consider possible security implications associated with the subprocess module.
+Test ID: B404
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/worker/dependence_upload.py
+Line number: 20
+More info: https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_imports.html#b404-import-subprocess
+
+19	import zipfile
+20	import subprocess
+21	
+
+subprocess_without_shell_equals_true: subprocess call - check for execution of untrusted input.
+Test ID: B603
+Severity: LOW
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/worker/dependence_upload.py
+Line number: 71
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b603_subprocess_without_shell_equals_true.html
+
+70	            venv_pack_path = os.path.join(os.getenv("VIRTUAL_ENV"), "bin/venv-pack")
+71	            subprocess.run([venv_pack_path, "-o", target_file])
+72	            source_path = os.path.dirname(os.path.dirname(os.getenv("VIRTUAL_ENV")))
+
+start_process_with_a_shell: Starting a process with a shell, possible injection detected, security issue.
+Test ID: B605
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/worker/dependence_upload.py
+Line number: 109
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b605_start_process_with_a_shell.html
+
+108	        storage_dir = f"/fate_dependence/{provider.version}"
+109	        os.system(f" {os.getenv('HADOOP_HOME')}/bin/hdfs dfs -mkdir -p  {hdfs_address}{storage_dir}")
+110	        status = os.system(f"{os.getenv('HADOOP_HOME')}/bin/hdfs dfs -put -f {target_file} {hdfs_address}{storage_dir}")
+
+start_process_with_a_shell: Starting a process with a shell, possible injection detected, security issue.
+Test ID: B605
+Severity: HIGH
+Confidence: HIGH
+CWE: CWE-78
+File: ./python/fate_flow/worker/dependence_upload.py
+Line number: 110
+More info: https://bandit.readthedocs.io/en/1.7.5/plugins/b605_start_process_with_a_shell.html
+
+109	        os.system(f" {os.getenv('HADOOP_HOME')}/bin/hdfs dfs -mkdir -p  {hdfs_address}{storage_dir}")
+110	        status = os.system(f"{os.getenv('HADOOP_HOME')}/bin/hdfs dfs -put -f {target_file} {hdfs_address}{storage_dir}")
+111	        LOGGER.info(f'upload end, status is {status}')
+
